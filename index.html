@@ -1,51 +1,60 @@
-<!doctype html>
-<html>
+<!DOCTYPE>
+<html lang= "en">
 <head>
-	<meta charset="UTF-8">
-	<title>About | Derryel Anderson</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+<meta charset="utf-8"/>
+	<title>JSON Carousel</title>
+	<link rel="stylesheet"  href="css/style.css">
 </head>
 <body>
-
-	<header id="masthead">
-		<div class="container">
-			<a href="index.html" id="logo">Derryel Anderson</a>
-			<nav>
-				<a href="index.html">About</a>
-				<a href="portfolio.html">Portfolio</a>
-				<a href="contact.html">Contact</a>
-			</nav>
-		</div>
-	</header>
-
-	<div id="main-container" class="container">
-		<section class="main-section">
-			<h1>About Me</h1>
-
-			<img src="assets/images/cat.jpg" class="auth-image" alt="Derryel Anderson">
-
-			<p>Marshmallow jelly souffl&eacute; pastry biscuit gummi bears tootsie roll tootsie roll gingerbread. Cotton candy muffin gingerbread fruitcake. Sweet roll souffl&eacute; topping wafer croissant oat cake gummi<!-- &nbsp; --> bears.</p>
-
-			<p>Jelly-o cheesecake dessert fruitcake ice cream brownie liquorice souffl&eacute;. Caramels biscuit gummi bears tiramisu chupa chups. Croissant macaroon cotton candy cake pudding.</p>
-
-		</section>
-
-		<section class="sidebar">
-			<div id="connect">
-				<h2>Connect with Me</h2>
-
-				<img src="assets/images/github-128.png" class="social" alt="Github">
-				<img src="assets/images/linkedin-128.png" class="social" alt="LinkedIn">
-				<img src="assets/images/stackoverflow-128.png" class="social" alt="Stack Overflow">
-			</div>
-		</section>
+	
+	<div id="presidentbox">
+		<a href="#" id="prev_btn">&laquo;</a>
+		<a href="#" id="next_btn">&raquo;</a>
+		<div id="carousel"></div>
 	</div>
 
-	<footer>
-		<div class="container">
-			&copy; Copyright 2016 Your Name
+
+
+<script id="presidenttpl" type="text/template">
+	{{#presidents}}
+
+		<div class="president">
+			<img src="images/{{number}}.jpg" id="pic" alt="Photo of {{president}}" />
+			
+			<h3>{{president}}</h3>
+			<h4>Birth Year: {{birth_year}}</h4>
+			<h4>Death Year: {{death_year}}</h4>
+			<p><h4>Presidental Term:</h4>{{took_office}}, {{left_office}}, <h4>Party:</h4>{{party}}</p>
 		</div>
-	</footer>
+	{{/presidents}}
+</script>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>s
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.0.3/jquery.cycle.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$.getJSON('data.json', function(data) {
+			var template = $('#presidenttpl').html();
+			var html = Mustache.to_html(template, data);
+			$('#carousel').html(html);
+
+			$('#carousel').cycle({
+				fx: 'fade',
+				pause: 1,
+				next: '#next_btn',
+				prev: '#prev_btn',
+				speed: 500,
+				timeout: 10000
+			});
+		});
+
+	});
+</script>
 </body>
 </html>
